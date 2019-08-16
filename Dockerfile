@@ -21,7 +21,7 @@ RUN chown -R oncall:oncall /home/oncall/source /var/log/nginx /var/lib/nginx \
 
 RUN sudo -Hu oncall virtualenv /home/oncall/env \
     && sudo -Hu oncall /bin/bash -c 'git clone -b py3 https://github.com/cleveritcz/oncall-admin.git /home/oncall/oncall-admin && \
-    source /home/oncall/env/bin/activate && cd /home/oncall/oncall-admin && python setup.py develop && make'
+    source /home/oncall/env/bin/activate && cd /home/oncall/oncall-admin && python setup.py develop && make & ;'
 
 COPY . /home/oncall
 COPY ops/config/systemd /etc/systemd/system
@@ -33,6 +33,6 @@ COPY ops/entrypoint.py /home/oncall/entrypoint.py
 
 
 EXPOSE 8080
-EXPOSE 16700
+EXPOSE 16652
 
 CMD ["sudo", "-EHu", "oncall", "bash", "-c", "source /home/oncall/env/bin/activate && python /home/oncall/entrypoint.py"]
